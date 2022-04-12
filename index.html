@@ -6,9 +6,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/reset.css">
     <link rel="stylesheet" href="/css/estilos.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;1,100;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
     <title>UOL</title>
 </head>
 <body>
+    <div class="header">
+        <img src="/Imagens/logo 1.png"/>
+        <img src="/Imagens/icon-pessoas.png" onclick="abreMenu()"/>
+    </div>
+    <div class="conteudo">
+         <div class="mensagem status">(09:21:45)  João  entra na sala...</div>
+         <div class="mensagem reservada">(09:21:45)  João  entra na sala...</div>
+        <div class="mensagem">(09:21:45)  João  entra na sala...</div>
+    </div>
+    <div class="footer">
+        <input type="text" placeholder="Escreva aqui...">
+        <img src="/Imagens/icon-aviao.png"/>
+    </div>
+
+    <div class="fundo-preto escondido" onclick="fecharMenu()"></div>
+    <div class="menu">
+        <div class="escolha">Escolha um contato para enviar mensagem:</div>
+        <div class="contatos">
+            <div class="opcao">
+                <img src="/Imagens/icon-pessoas.png"/>
+                <p>Todos</p>
+                <img src="/Imagens/check.png" class="">
+            </div>
+        </div>
+    </div>
+        
+
     
+
+    <script src="scripts.js"></script>
 </body>
 </html>
