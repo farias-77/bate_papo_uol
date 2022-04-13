@@ -133,7 +133,7 @@
         margin: 124px 0 100px 0; 
     }
 
-    .mensagem{
+    .message{
         width: 100%;
         
         display: flex;
@@ -150,7 +150,7 @@
         background-color: #DCDCDC;
     }
 
-    .reservada{
+    .private_message{
         background-color: #FFDEDE;
     }
 
@@ -225,5 +225,24 @@
 
     .escondido{
         display: none;
+    }
+
+    .horario{
+        color: #acacac;
+        margin-right: 8px;
+    }
+
+    .from{
+        font-weight: 700;
+        margin-right: 5px;
+    }
+
+    .to{
+        font-weight: 700;
+        margin-left: 5px;
+    }
+
+    .text{
+        margin-left: 7px;
     }
 }
