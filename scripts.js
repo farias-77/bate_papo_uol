@@ -5,7 +5,9 @@ let arrMensagens = [];
 
 function abreMenu(){
     let fundoPreto = document.querySelector(".fundo-preto");
-    fundoPreto.classList.remove("escondido");
+    setTimeout(function(){
+        fundoPreto.classList.remove("escondido");
+    }, 50);
 
     let menu = document.querySelector(".menu");
     menu.classList.add("menu-aberto");
@@ -16,9 +18,8 @@ function fecharMenu(){
     menu.classList.remove("menu-aberto");
     
     let fundoPreto = document.querySelector(".fundo-preto");
-    setTimeout(function(){
-        fundoPreto.classList.add("escondido");
-    }, 100);
+    fundoPreto.classList.add("escondido");
+   
 }
 
 function entraChat(){
@@ -123,4 +124,19 @@ function enviarMensagem(){
 
 function windowReload(){
     window.location.reload();
+}
+
+function selecionaVisibilidade(elemento){
+
+    if(elemento.classList.contains("selecionado")){
+        return;
+    }else{
+        let selecionadoAntes = document.querySelector(".visibilidade").querySelector(".selecionado");
+
+        selecionadoAntes.classList.remove("selecionado");
+        elemento.classList.add("selecionado");
+
+        selecionadoAntes.querySelector("img:last-child").classList.add("escondido");
+        elemento.querySelector("img:last-child").classList.remove("escondido");
+    }
 }

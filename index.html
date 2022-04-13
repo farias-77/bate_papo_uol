@@ -33,27 +33,32 @@
     </div>
 
     <div class="menu-fundoPreto">
-        <div class="fundo-preto " onclick="fecharMenu()"></div>
+        <div class="fundo-preto escondido" onclick="fecharMenu()"></div>
         <div class="menu">
             <div class="escolha">Escolha um contato para enviar mensagem:</div>
             <div class="contatos">
-                <div class="opcao">
+                <div class="opcao selecionado">
                     <img src="/Imagens/icon-pessoas.png"/>
                     <p>Todos</p>
                     <img src="/Imagens/check.png" class="">
                 </div>
+                <div class="opcao">
+                    <img src="/Imagens/ImagemContato.png"/>
+                    <p>João</p>
+                    <img src="/Imagens/check.png" class="escondido">
+                </div>
             </div>
             <div class="escolha">Escolha a visibilidade:</div>
             <div class="visibilidade">
-                <div class="cadeadoAberto">
+                <div class="publico selecionado" onclick="selecionaVisibilidade(this)">
                     <img src="/Imagens/cadeadoAberto.png"/>
                     <p>Público</p>
                     <img src="/Imagens/check.png" class="">
                 </div>
-                <div class="cadeadoFechado">
+                <div class="reservadamente" onclick="selecionaVisibilidade(this)">
                     <img src="/Imagens/cadeadoFechado.png"/>
                     <p>Reservadamente</p>
-                    <img src="/Imagens/check.png" class="">
+                    <img src="/Imagens/check.png" class="escondido">
                 </div>
             </div>
         </div>

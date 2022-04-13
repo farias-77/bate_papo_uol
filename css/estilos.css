@@ -176,8 +176,7 @@
 
         position: fixed;
         top: 0;
-        /* right: calc(0px - 70%); */
-        right: 0;
+        right: calc(0px - 70%);
 
         z-index: 3;
 
@@ -207,22 +206,25 @@
 
         display: flex;
         align-items: center;
+
+        position: relative;
     }
 
     .opcao img:first-child{
-        width: 40px;
+        width: 30px;
         margin-left: 20px;
     }
 
-    .opcao p, .cadeadoAberto p, .cadeadoFechado p{
+    .opcao p{
         font-weight: 400;
         font-size: 20px;
-        margin-left: 20px;
+        margin-left: 10px;
     }
 
     .opcao img:last-child{
         width: 20px;
-        margin-left: 53%;
+        position: absolute;
+        right: 5%;
     }
 
     .escondido{
@@ -248,23 +250,29 @@
         margin-left: 7px;
     }
 
-    .cadeadoAberto, .cadeadoFechado{
+    .publico, .reservadamente{
         width: 100%;
         height: 50px;
 
         display: flex;
         align-items: center;
+        position: relative;
     }
 
-    .cadeadoAberto img:first-child, .cadeadoFechado img:first-child{
-        width: 25px;
+    .publico img:first-child, .reservadamente img:first-child{
+        width: 20px;
         margin-left: 30px;
-        margin-right: 30px;
     }
 
-    .cadeadoAberto p, .cadeadoFechado p{
-        width: 25px;
-        margin-left: 30px;
-        margin-right: 30px;
+    .publico p, .reservadamente p{
+        font-weight: 400;
+        font-size: 20px;
+        margin-left: 20px;
+    }
+
+    .publico img:last-child, .reservadamente img:last-child{
+        position: absolute;
+        right: 5%;
+        width: 20px;
     }
 }
