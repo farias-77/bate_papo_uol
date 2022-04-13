@@ -1,5 +1,6 @@
 let nomeUsuario = {name: ""};
-let intervalID;
+let conexaoID;
+let mensagensID;
 let arrMensagens = [];
 
 function abreMenu(){
@@ -22,8 +23,8 @@ function fecharMenu(){
 
 function entraChat(){
 
-    let nome = document.querySelector(".tela-entrada input");
-    nomeUsuario.name = nome.value;
+    let input = document.querySelector(".tela-entrada input");
+    nomeUsuario.name = input.value;
     
     let promise = axios.post("https://mock-api.driven.com.br/api/v6/uol/participants", nomeUsuario);
 
@@ -52,20 +53,23 @@ function trataErroEntrada(error){
     }
 }
 
-function trataSucessoEntrada(response){
+function trataSucessoEntrada(){
     
     document.querySelector(".tela-entrada").classList.add("escondido");
     document.querySelector(".container").classList.remove("escondido");
-    manterConexaoECarregar();
+    manterConexao();
+    carregarMensagens3s();
 }
 
-function manterConexaoECarregar(){
-    intervalID = setInterval(auxManterConexaoECarregar, 2000);
+function manterConexao(){
+    
+    conexaoID = setInterval(function (){
+        axios.post("https://mock-api.driven.com.br/api/v6/uol/status", nomeUsuario);
+    }, 5000);
 }
 
-function auxManterConexaoECarregar(){
-    axios.post("https://mock-api.driven.com.br/api/v6/uol/status", nomeUsuario);
-    carregaMensagens();
+function carregarMensagens3s(){
+    mensagensID = setInterval(carregaMensagens, 3000);
 }
 
 function carregaMensagens(){
@@ -76,8 +80,12 @@ function carregaMensagens(){
 
 function renderizaMensagens(response){
     arrMensagens = response.data;
+    
+    //zera mensagens e imprime novamente com as novas mensagens 
+    document.querySelector(".conteudo").innerHTML = "";
     for(let i = 0; i < arrMensagens.length; i++){
-        imprimeMensagem(arrMensagens[i]);    
+        imprimeMensagem(arrMensagens[i]); 
+        document.querySelector(".conteudo div:last-child").scrollIntoView();   
     }
 }
 
@@ -92,13 +100,13 @@ function imprimeMensagem(mensagem){
     }else if(mensagem.type === "private_message"){
         espacoMensagens.innerHTML += `<div class="message private_message"><span class="horario">(${mensagem.time})</span><span class="from">${mensagem.from}</span>reservadamente para<span class="to">${mensagem.to}:</span><span class="text">${mensagem.text}</span></div>`
     }
-
-    document.querySelector(".conteudo div:last-child").scrollIntoView();
 }
 
 function enviarMensagem(){
     
-    let mensagemDigitada = document.querySelector(".footer input").value;
+    let input = document.querySelector(".footer input");
+    let mensagemDigitada = input.value;
+    input.value = "";
 
     let mensagem = {
         from: nomeUsuario.name,
