@@ -1,20 +1,35 @@
-let nomeUsuario;
+let nomeUsuario = {name: ""};
+let intervalID;
 
 function entraChat(){
 
     let nome = document.querySelector(".tela-entrada input");
-    nomeUsuario = nome.value;
-    
-    let promise = axios.post("https://mock-api.driven.com.br/api/v6/uol/participants", {name: nomeUsuario});
+    nomeUsuario.name = nome.value;
+    console.log(nomeUsuario)
+    let promise = axios.post("https://mock-api.driven.com.br/api/v6/uol/participants", nomeUsuario);
 
     promise.catch(trataErroEntrada);
     promise.then(trataSucessoEntrada);
 }
 
 function trataErroEntrada(error){
-
-    if(error.response.status === 400){
-        document.querySelector(".tela-entrada p").classList.remove("escondido");
+    let primeiroP = document.querySelector(".tela-entrada p");
+    let segundoP = document.querySelector(".tela-entrada p:nth-child(3)")
+    
+    if(nomeUsuario.name == ""){
+        
+        if(!segundoP.classList.contains("escondido")){
+            segundoP.classList.add("escondido")
+        }
+        
+        primeiroP.classList.remove("escondido");
+    }else{
+        
+        if(!primeiroP.classList.contains("escondido")){
+            primeiroP.classList.add("escondido")
+        }
+        
+        segundoP.classList.remove("escondido");
     }
 }
 
@@ -22,16 +37,20 @@ function trataSucessoEntrada(response){
     
     document.querySelector(".tela-entrada").classList.add("escondido");
     document.querySelector(".container").classList.remove("escondido");
-    carregaMensagens();
     manterConexao();
-}
-
-function carregaMensagens(){
+    carregaMensagens();
 }
 
 function manterConexao(){
+    intervalID = setInterval(function(){
+        axios.post("https://mock-api.driven.com.br/api/v6/uol/status", nomeUsuario);
+    }, 3000);
 }
 
+function carregaMensagens(){
+
+    
+}
 
 
 function abreMenu(){
