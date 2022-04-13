@@ -9,6 +9,69 @@
         font-family: 'Roboto', sans-serif;
     }
 
+    .tela-entrada{
+        width: 100%;
+        height: 100%;
+        z-index: 2;
+        
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        
+        background-color: white;
+    }
+
+    .tela-entrada img{
+        width: 150px;
+        margin-top: 190px;
+        margin-bottom: 40px;
+    }
+
+    .tela-entrada p{
+        font-size: 18px;
+        font-weight: 700;
+        color: red;
+    }
+
+    .tela-entrada input{
+        width: 260px;
+        height: 60px;
+
+        margin-top: 20px;
+        margin-bottom: 30px;
+
+        border: 1px solid #d7d7d7;
+        border-radius: 4px;
+
+        font-size: 18px;
+        font-weight: 400;
+        text-align: center;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .tela-entrada ::placeholder{
+        color: #aeaeae;   
+    }
+
+    .tela-entrada button{
+        width: 140px;
+        height: 60px;
+        background-color: #e7e7e7;
+        border:none;
+        border-radius: 9px;
+
+        font-size: 18px;
+        color: #696969;
+
+        cursor: pointer;
+    }
+
     .header {
         height: 100px;
         width: 100%;
@@ -61,7 +124,7 @@
         font-weight: 400;  
     }
 
-    ::placeholder {
+    .footer ::placeholder {
         color: black;     
         font-style: italic;
     }
@@ -159,7 +222,6 @@
         width: 20px;
         margin-left: 53%;
     }
-
 
     .escondido{
         display: none;

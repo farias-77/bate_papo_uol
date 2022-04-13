@@ -12,21 +12,29 @@
     <title>UOL</title>
 </head>
 <body>
-    <div class="header">
+    <div class="tela-entrada">
         <img src="/Imagens/logo 1.png"/>
-        <img src="/Imagens/icon-pessoas.png" onclick="abreMenu()"/>
+        <p class="escondido">Este nome já está sendo utilizado, por favor digite outro.</p>
+        <input type="text" placeholder="Digite seu nome">
+        <button onclick="entraChat()">Entrar</button>
     </div>
-    <div class="conteudo">
-         <div class="mensagem status">(09:21:45)  João  entra na sala...</div>
-         <div class="mensagem reservada">(09:21:45)  João  entra na sala...</div>
-        <div class="mensagem">(09:21:45)  João  entra na sala...</div>
-    </div>
-    <div class="footer">
-        <input type="text" placeholder="Escreva aqui...">
-        <img src="/Imagens/icon-aviao.png"/>
+    
+    <div class="container escondido">
+        <div class="header">
+            <img src="/Imagens/logo 1.png"/>
+            <img src="/Imagens/icon-pessoas.png" onclick="abreMenu()"/>
+        </div>
+        <div class="conteudo">
+    
+        </div>
+        <div class="footer">
+            <input type="text" placeholder="Escreva aqui...">
+            <img src="/Imagens/icon-aviao.png"/>
+        </div>
     </div>
 
-    <div class="fundo-preto escondido" onclick="fecharMenu()"></div>
+    <div class="menu-fundoPreto">
+        <div class="fundo-preto escondido" onclick="fecharMenu()"></div>
     <div class="menu">
         <div class="escolha">Escolha um contato para enviar mensagem:</div>
         <div class="contatos">
@@ -37,10 +45,11 @@
             </div>
         </div>
     </div>
+    </div>
         
 
     
-
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="scripts.js"></script>
 </body>
 </html>
