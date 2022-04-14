@@ -61,7 +61,9 @@ function trataSucessoEntrada(){
     document.querySelector(".tela-entrada").classList.add("escondido");
     document.querySelector(".container").classList.remove("escondido");
     manterConexao();
+    carregaMensagens();
     carregarMensagens3s();
+    carregaParticipantes();
     carregaParticipantes10s();
 }
 
@@ -157,10 +159,11 @@ function renderizarParticipantes(response){
     arrParticipantes = response.data;
 
     //zera participantes e imprime novamente com as atualizações
-    document.querySelector(".contatos").innerHTML = `<div class="opcao selecionado">
-    <img src="/Imagens/icon-pessoas.png"/>
-    <p>Todos</p>
-    <img src="/Imagens/check.png" class="">
+    document.querySelector(".contatos").innerHTML = `
+    <div class="opcao selecionado" onclick="selecionaParticipante(this)">
+        <img src="/Imagens/icon-pessoas.png"/>
+        <p>Todos</p>
+        <img src="/Imagens/check.png" class="">
 </div>  
     `;
     for(let i = 0; i < arrParticipantes.length; i++){
@@ -172,9 +175,25 @@ function imprimeParticipante(participante){
 
     let espacoContatos = document.querySelector(".contatos");
 
-    espacoContatos.innerHTML += `<div class="opcao">
+    espacoContatos.innerHTML += `<div class="opcao" onclick="selecionaParticipante(this)">
     <img src="/Imagens/ImagemContato.png"/>
     <p>${participante.name}</p>
     <img src="/Imagens/check.png" class="escondido">
 </div>`   
+}
+
+function selecionaParticipante(participanteClicado){
+
+     if(participanteClicado.classList.contains("selecionado")){
+         return;
+     }
+
+    let espacoContatos = document.querySelector(".contatos");
+    let selecionadoAnterior = espacoContatos.querySelector(".selecionado")
+    
+    selecionadoAnterior.classList.remove("selecionado");
+    participanteClicado.classList.add("selecionado");
+
+    selecionadoAnterior.querySelector("img:last-child").classList.add("escondido");
+    participanteClicado.querySelector("img:last-child").classList.remove("escondido");
 }
