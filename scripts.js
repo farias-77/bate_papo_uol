@@ -1,7 +1,9 @@
 let nomeUsuario = {name: ""};
 let conexaoID;
 let mensagensID;
+let participantesID;
 let arrMensagens = [];
+let arrParticipantes = [];
 
 function abreMenu(){
     let fundoPreto = document.querySelector(".fundo-preto");
@@ -60,6 +62,7 @@ function trataSucessoEntrada(){
     document.querySelector(".container").classList.remove("escondido");
     manterConexao();
     carregarMensagens3s();
+    carregaParticipantes10s();
 }
 
 function manterConexao(){
@@ -118,8 +121,8 @@ function enviarMensagem(){
 
     let promise = axios.post("https://mock-api.driven.com.br/api/v6/uol/messages", mensagem); 
 
-    promise.then(carregaMensagens);
     promise.catch(windowReload);
+    promise.then(carregaMensagens);
 }
 
 function windowReload(){
@@ -139,4 +142,39 @@ function selecionaVisibilidade(elemento){
         selecionadoAntes.querySelector("img:last-child").classList.add("escondido");
         elemento.querySelector("img:last-child").classList.remove("escondido");
     }
+}
+
+function carregaParticipantes10s(){
+    participantesID = setInterval(carregaParticipantes, 10000);
+}
+
+function carregaParticipantes(){
+    let promise = axios.get("https://mock-api.driven.com.br/api/v6/uol/participants");
+    promise.then(renderizarParticipantes);
+}
+
+function renderizarParticipantes(response){
+    arrParticipantes = response.data;
+
+    //zera participantes e imprime novamente com as atualizações
+    document.querySelector(".contatos").innerHTML = `<div class="opcao selecionado">
+    <img src="/Imagens/icon-pessoas.png"/>
+    <p>Todos</p>
+    <img src="/Imagens/check.png" class="">
+</div>  
+    `;
+    for(let i = 0; i < arrParticipantes.length; i++){
+        imprimeParticipante(arrParticipantes[i]);
+    }
+}
+
+function imprimeParticipante(participante){
+
+    let espacoContatos = document.querySelector(".contatos");
+
+    espacoContatos.innerHTML += `<div class="opcao">
+    <img src="/Imagens/ImagemContato.png"/>
+    <p>${participante.name}</p>
+    <img src="/Imagens/check.png" class="escondido">
+</div>`   
 }

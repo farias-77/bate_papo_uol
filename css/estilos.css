@@ -187,6 +187,11 @@
         right: 0;   
     }
 
+    .contatos{
+        height: 50%;
+        overflow: scroll;
+    }
+
     .escolha {
         height: 100px;
         width: 100%;
