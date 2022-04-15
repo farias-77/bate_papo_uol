@@ -6,7 +6,7 @@ let participantesID;
 let arrMensagens = [];
 let arrParticipantes = [];
 let contatoSelecionado;
-let visibilidadeSelecionada;
+let nomeSelecionado = "Todos";
 
 function abreMenu(){
     
@@ -180,38 +180,79 @@ function carregaParticipantes(){
 }
 
 function renderizarParticipantes(response){
-    //imprime usuários no menu lateral
+    //exibe usuários no menu lateral
 
     arrParticipantes = response.data;
     let contatos = document.querySelector(".contatos");
+    let continuaOnline = false;
 
-        contatos.innerHTML = `
-    <div class="opcao selecionado" onclick="selecionaParticipante(this)">
-        <img src="/Imagens/icon-pessoas.png"/>
-        <p>Todos</p>
-        <img src="/Imagens/check.png" class="">
-</div>`;  
-   
     for(let i = 0; i < arrParticipantes.length; i++){
-        imprimeParticipante(arrParticipantes[i]);
+        if(arrParticipantes[i].name === nomeSelecionado){
+            continuaOnline = true;
+        }
+    }
+    
+    if(continuaOnline === false){
+        contatoSelecionado = undefined;
+    }
+
+    //primeiro ciclo (default)
+    if(contatoSelecionado === undefined || contatoSelecionado === null){
+        contatos.innerHTML = `
+        <div class="opcao selecionado" onclick="selecionaParticipante(this)">
+            <img src="/Imagens/icon-pessoas.png"/>
+            <p>Todos</p>
+            <img src="/Imagens/check.png" class="">
+    </div>`;
+
+    nomeSelecionado = "Todos";
+    console.log("1")
+    }else{//ciclos seguintes (usuário mudou quem recebe a mensagem)
+        contatos.innerHTML = `
+        <div class="opcao" onclick="selecionaParticipante(this)">
+            <img src="/Imagens/icon-pessoas.png"/>
+            <p>Todos</p>
+            <img src="/Imagens/check.png" class="escondido">
+    </div>`;
+
+    nomeSelecionado = contatoSelecionado.querySelector("p").innerHTML;
+    console.log("2")
+    }
+
+    for(let j = 0; j < arrParticipantes.length; j++){
+        imprimeParticipante(arrParticipantes[j], nomeSelecionado);
     }
 }
 
-function imprimeParticipante(participante){
+function imprimeParticipante(participante, nomeSelecionado){
     //layout para exibir contato na tela
-    
+
     let espacoContatos = document.querySelector(".contatos");
 
-    espacoContatos.innerHTML += `<div class="opcao" onclick="selecionaParticipante(this)">
+    if(participante.name === nomeSelecionado){
+        espacoContatos.innerHTML += `<div class="opcao selecionado" onclick="selecionaParticipante(this)">
+    <img src="/Imagens/ImagemContato.png"/>
+    <p>${participante.name}</p>
+    <img src="/Imagens/check.png" class="">
+</div>`   
+    }else{
+        espacoContatos.innerHTML += `<div class="opcao" onclick="selecionaParticipante(this)">
     <img src="/Imagens/ImagemContato.png"/>
     <p>${participante.name}</p>
     <img src="/Imagens/check.png" class="escondido">
 </div>`   
+    }
+
+
 }
 
 function selecionaParticipante(participanteClicado){
     //adiciona classe selecionado ao participante desejado e retira do selecionado anterior
     
+    contatoSelecionado = participanteClicado;
+    nomeSelecionado = participanteClicado.querySelector("p").innerHTML;
+
+
     let espacoContatos = document.querySelector(".contatos");
     let selecionadoAnterior = espacoContatos.querySelector(".selecionado")
     
