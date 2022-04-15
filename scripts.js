@@ -1,24 +1,33 @@
+//Variáveis globais
 let nomeUsuario = {name: ""};
 let conexaoID;
 let mensagensID;
 let participantesID;
 let arrMensagens = [];
 let arrParticipantes = [];
+let contatoSelecionado;
+let visibilidadeSelecionada;
 
 function abreMenu(){
+    
+    //espera 50ms para mostrar o background preto
     let fundoPreto = document.querySelector(".fundo-preto");
     setTimeout(function(){
         fundoPreto.classList.remove("escondido");
     }, 50);
 
+    //abre o menu de contatos
     let menu = document.querySelector(".menu");
     menu.classList.add("menu-aberto");
 }
 
 function fecharMenu(){
+    
+    //fecha menu de contatos
     let menu = document.querySelector(".menu");
     menu.classList.remove("menu-aberto");
     
+    //remove fundo preto
     let fundoPreto = document.querySelector(".fundo-preto");
     fundoPreto.classList.add("escondido");
    
@@ -26,19 +35,25 @@ function fecharMenu(){
 
 function entraChat(){
 
+    //salva nome digitado na variavel global
     let input = document.querySelector(".tela-entrada input");
     nomeUsuario.name = input.value;
     
+    //requisicao para entrar no chat
     let promise = axios.post("https://mock-api.driven.com.br/api/v6/uol/participants", nomeUsuario);
 
+    //trata erro e sucesso
     promise.catch(trataErroEntrada);
     promise.then(trataSucessoEntrada);
 }
 
 function trataErroEntrada(error){
+    
+    //mensagens diferentes para erros diferentes
     let primeiroP = document.querySelector(".tela-entrada p");
     let segundoP = document.querySelector(".tela-entrada p:nth-child(3)")
     
+    //erro de nome em branco  /  erro de nome repetido
     if(nomeUsuario.name == ""){
         
         if(!segundoP.classList.contains("escondido")){
@@ -58,27 +73,30 @@ function trataErroEntrada(error){
 
 function trataSucessoEntrada(){
     
+    //esconde tela de entrada e mostra tela principal do chat
     document.querySelector(".tela-entrada").classList.add("escondido");
     document.querySelector(".container").classList.remove("escondido");
-    manterConexao();
-    carregaMensagens();
-    carregarMensagens3s();
-    carregaParticipantes();
-    carregaParticipantes10s();
+    manterConexao();            //"avisar" que ainda está online
+    carregaMensagens();         //carrega as mensagens logo quando entra
+    carregarMensagens3s();      //ajusta timer de 3s para atualizar mensagens
+    carregaParticipantes();     //carrega participantes logo quando entra
+    carregaParticipantes10s();  //ajusta timer de 10s para atualizar participantes
 }
 
 function manterConexao(){
-    
+    //avisa a cada 5 segundos que o usuario ainda está online
     conexaoID = setInterval(function (){
         axios.post("https://mock-api.driven.com.br/api/v6/uol/status", nomeUsuario);
     }, 5000);
 }
 
 function carregarMensagens3s(){
+    //atualiza mensagens a cada 3 segundos
     mensagensID = setInterval(carregaMensagens, 3000);
 }
 
 function carregaMensagens(){
+    //carrega mensagens
     let promise = axios.get("https://mock-api.driven.com.br/api/v6/uol/messages");
     promise.then(renderizaMensagens);
 
@@ -96,6 +114,7 @@ function renderizaMensagens(response){
 }
 
 function imprimeMensagem(mensagem){
+    //layouts diferentes para cada tipo de mensagem
 
     let espacoMensagens = document.querySelector(".conteudo");
     
@@ -109,7 +128,8 @@ function imprimeMensagem(mensagem){
 }
 
 function enviarMensagem(){
-    
+    //cria objeto mensagem que será enviado e faz a requisição para enviar
+
     let input = document.querySelector(".footer input");
     let mensagemDigitada = input.value;
     input.value = "";
@@ -123,6 +143,7 @@ function enviarMensagem(){
 
     let promise = axios.post("https://mock-api.driven.com.br/api/v6/uol/messages", mensagem); 
 
+    //trata sucesso e falha
     promise.catch(windowReload);
     promise.then(carregaMensagens);
 }
@@ -132,7 +153,8 @@ function windowReload(){
 }
 
 function selecionaVisibilidade(elemento){
-
+    //seleciona visibilidade que o usuário deseja para a mensagem (pública ou privada)
+    
     if(elemento.classList.contains("selecionado")){
         return;
     }else{
@@ -147,32 +169,37 @@ function selecionaVisibilidade(elemento){
 }
 
 function carregaParticipantes10s(){
+    //atualiza participantes a cada 10 segundos
     participantesID = setInterval(carregaParticipantes, 10000);
 }
 
 function carregaParticipantes(){
+    //faz requisição para saber os usuários online
     let promise = axios.get("https://mock-api.driven.com.br/api/v6/uol/participants");
     promise.then(renderizarParticipantes);
 }
 
 function renderizarParticipantes(response){
-    arrParticipantes = response.data;
+    //imprime usuários no menu lateral
 
-    //zera participantes e imprime novamente com as atualizações
-    document.querySelector(".contatos").innerHTML = `
+    arrParticipantes = response.data;
+    let contatos = document.querySelector(".contatos");
+
+        contatos.innerHTML = `
     <div class="opcao selecionado" onclick="selecionaParticipante(this)">
         <img src="/Imagens/icon-pessoas.png"/>
         <p>Todos</p>
         <img src="/Imagens/check.png" class="">
-</div>  
-    `;
+</div>`;  
+   
     for(let i = 0; i < arrParticipantes.length; i++){
         imprimeParticipante(arrParticipantes[i]);
     }
 }
 
 function imprimeParticipante(participante){
-
+    //layout para exibir contato na tela
+    
     let espacoContatos = document.querySelector(".contatos");
 
     espacoContatos.innerHTML += `<div class="opcao" onclick="selecionaParticipante(this)">
@@ -183,11 +210,8 @@ function imprimeParticipante(participante){
 }
 
 function selecionaParticipante(participanteClicado){
-
-     if(participanteClicado.classList.contains("selecionado")){
-         return;
-     }
-
+    //adiciona classe selecionado ao participante desejado e retira do selecionado anterior
+    
     let espacoContatos = document.querySelector(".contatos");
     let selecionadoAnterior = espacoContatos.querySelector(".selecionado")
     
@@ -197,3 +221,4 @@ function selecionaParticipante(participanteClicado){
     selecionadoAnterior.querySelector("img:last-child").classList.add("escondido");
     participanteClicado.querySelector("img:last-child").classList.remove("escondido");
 }
+

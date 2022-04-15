@@ -176,7 +176,7 @@
 
         position: fixed;
         top: 0;
-        right: calc(0px - 70%);
+        right: -70%;
 
         z-index: 3;
 
