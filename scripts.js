@@ -5,8 +5,8 @@ let mensagensID;
 let participantesID;
 let arrMensagens = [];
 let arrParticipantes = [];
-let contatoSelecionado;
 let nomeSelecionado = "Todos";
+let visibilidadeSelecionada = "Público";
 
 function abreMenu(){
     
@@ -133,12 +133,20 @@ function enviarMensagem(){
     let input = document.querySelector(".footer input");
     let mensagemDigitada = input.value;
     input.value = "";
+    let tipo;
+
+    if(visibilidadeSelecionada === "Público"){
+        tipo = "message";
+    }else{
+        tipo = "private_message";
+    }
+
 
     let mensagem = {
         from: nomeUsuario.name,
         to: nomeSelecionado,
         text: mensagemDigitada,
-        type: "message"
+        type: tipo
     }
 
     let promise = axios.post("https://mock-api.driven.com.br/api/v6/uol/messages", mensagem); 
@@ -154,7 +162,7 @@ function windowReload(){
 
 function selecionaVisibilidade(elemento){
     //seleciona visibilidade que o usuário deseja para a mensagem (pública ou privada)
-    
+    visibilidadeSelecionada = elemento.querySelector("p").innerHTML;
     if(elemento.classList.contains("selecionado")){
         return;
     }else{
@@ -193,19 +201,17 @@ function renderizarParticipantes(response){
     }
     
     if(continuaOnline === false){
-        contatoSelecionado = undefined;
+        nomeSelecionado = "Todos";
     }
 
     //primeiro ciclo (default)
-    if(contatoSelecionado === undefined || contatoSelecionado === null){
+    if(nomeSelecionado === "Todos"){
         contatos.innerHTML = `
         <div class="opcao selecionado" onclick="selecionaParticipante(this)">
             <img src="/Imagens/icon-pessoas.png"/>
             <p>Todos</p>
             <img src="/Imagens/check.png" class="">
     </div>`;
-
-    nomeSelecionado = "Todos";
     }else{//ciclos seguintes (usuário mudou quem recebe a mensagem)
         contatos.innerHTML = `
         <div class="opcao" onclick="selecionaParticipante(this)">
@@ -213,8 +219,6 @@ function renderizarParticipantes(response){
             <p>Todos</p>
             <img src="/Imagens/check.png" class="escondido">
     </div>`;
-
-    nomeSelecionado = contatoSelecionado.querySelector("p").innerHTML;
     }
 
     for(let j = 0; j < arrParticipantes.length; j++){
@@ -247,7 +251,6 @@ function imprimeParticipante(participante, nomeSelecionado){
 function selecionaParticipante(participanteClicado){
     //adiciona classe selecionado ao participante desejado e retira do selecionado anterior
     
-    contatoSelecionado = participanteClicado;
     nomeSelecionado = participanteClicado.querySelector("p").innerHTML;
 
 
