@@ -136,7 +136,7 @@ function enviarMensagem(){
 
     let mensagem = {
         from: nomeUsuario.name,
-        to: "Todos",
+        to: nomeSelecionado,
         text: mensagemDigitada,
         type: "message"
     }
@@ -206,7 +206,6 @@ function renderizarParticipantes(response){
     </div>`;
 
     nomeSelecionado = "Todos";
-    console.log("1")
     }else{//ciclos seguintes (usuário mudou quem recebe a mensagem)
         contatos.innerHTML = `
         <div class="opcao" onclick="selecionaParticipante(this)">
@@ -216,7 +215,6 @@ function renderizarParticipantes(response){
     </div>`;
 
     nomeSelecionado = contatoSelecionado.querySelector("p").innerHTML;
-    console.log("2")
     }
 
     for(let j = 0; j < arrParticipantes.length; j++){
