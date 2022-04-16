@@ -277,3 +277,15 @@ function exibeConfigMensagem1s(){
     configID = setInterval(configMensagem, 500);
 }
 
+function capturaClique(){
+    document.querySelector(".footer input").addEventListener('keydown', verificaEnter);
+}
+
+function verificaEnter(){
+    let tecla = event.keyCode;
+    
+    if(tecla === 13){
+        enviarMensagem();
+    }
+}
+
