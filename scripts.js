@@ -3,6 +3,7 @@ let nomeUsuario = {name: ""};
 let conexaoID;
 let mensagensID;
 let participantesID;
+let configID;
 let arrMensagens = [];
 let arrParticipantes = [];
 let nomeSelecionado = "Todos";
@@ -81,6 +82,7 @@ function trataSucessoEntrada(){
     carregarMensagens3s();      //ajusta timer de 3s para atualizar mensagens
     carregaParticipantes();     //carrega participantes logo quando entra
     carregaParticipantes10s();  //ajusta timer de 10s para atualizar participantes
+    exibeConfigMensagem1s();
 }
 
 function manterConexao(){
@@ -262,5 +264,16 @@ function selecionaParticipante(participanteClicado){
 
     selecionadoAnterior.querySelector("img:last-child").classList.add("escondido");
     participanteClicado.querySelector("img:last-child").classList.remove("escondido");
+}
+
+function configMensagem(){
+
+    let configMens = document.querySelector(".footer p");
+
+    configMens.innerHTML = `Enviando para ${nomeSelecionado} (${visibilidadeSelecionada.toLowerCase()})`
+}
+
+function exibeConfigMensagem1s(){
+    configID = setInterval(configMensagem, 500);
 }
 
