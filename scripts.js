@@ -34,11 +34,21 @@ function fecharMenu(){
    
 }
 
-function entraChat(){
+function abreGif(){
 
     //salva nome digitado na variavel global
     let input = document.querySelector(".tela-entrada input");
     nomeUsuario.name = input.value;
+
+    let divGif = document.querySelector(".gif");
+    let telaEntrada = document.querySelector(".tela-entrada");
+    divGif.classList.remove("escondido");
+    telaEntrada.classList.add("escondido");
+
+    setTimeout(entraChat(), 3000);
+}
+
+function entraChat(){
     
     //requisicao para entrar no chat
     let promise = axios.post("https://mock-api.driven.com.br/api/v6/uol/participants", nomeUsuario);
@@ -75,7 +85,7 @@ function trataErroEntrada(error){
 function trataSucessoEntrada(){
     
     //esconde tela de entrada e mostra tela principal do chat
-    document.querySelector(".tela-entrada").classList.add("escondido");
+    document.querySelector(".gif").classList.add("escondido");
     document.querySelector(".container").classList.remove("escondido");
     manterConexao();            //"avisar" que ainda está online
     carregaMensagens();         //carrega as mensagens logo quando entra
