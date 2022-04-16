@@ -220,16 +220,16 @@ function renderizarParticipantes(response){
     if(nomeSelecionado === "Todos"){
         contatos.innerHTML = `
         <div class="opcao selecionado" onclick="selecionaParticipante(this)">
-            <img src="/Imagens/icon-pessoas.png"/>
+            <img src="Imagens/icon-pessoas.png"/>
             <p>Todos</p>
-            <img src="/Imagens/check.png" class="">
+            <img src="Imagens/check.png" class="">
     </div>`;
     }else{//ciclos seguintes (usuário mudou quem recebe a mensagem)
         contatos.innerHTML = `
         <div class="opcao" onclick="selecionaParticipante(this)">
-            <img src="/Imagens/icon-pessoas.png"/>
+            <img src="Imagens/icon-pessoas.png"/>
             <p>Todos</p>
-            <img src="/Imagens/check.png" class="escondido">
+            <img src="Imagens/check.png" class="escondido">
     </div>`;
     }
 
@@ -245,15 +245,15 @@ function imprimeParticipante(participante, nomeSelecionado){
 
     if(participante.name === nomeSelecionado){
         espacoContatos.innerHTML += `<div class="opcao selecionado" onclick="selecionaParticipante(this)">
-    <img src="/Imagens/ImagemContato.png"/>
+    <img src="Imagens/ImagemContato.png"/>
     <p>${participante.name}</p>
-    <img src="/Imagens/check.png" class="">
+    <img src="Imagens/check.png" class="">
 </div>`   
     }else{
         espacoContatos.innerHTML += `<div class="opcao" onclick="selecionaParticipante(this)">
-    <img src="/Imagens/ImagemContato.png"/>
+    <img src="Imagens/ImagemContato.png"/>
     <p>${participante.name}</p>
-    <img src="/Imagens/check.png" class="escondido">
+    <img src="Imagens/check.png" class="escondido">
 </div>`   
     }
 
