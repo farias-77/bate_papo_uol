@@ -45,7 +45,7 @@ function abreGif(){
     divGif.classList.remove("escondido");
     telaEntrada.classList.add("escondido");
 
-    setTimeout(entraChat(), 3000);
+    setTimeout(entraChat, 2000);
 }
 
 function entraChat(){
