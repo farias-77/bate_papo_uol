@@ -64,6 +64,13 @@ function trataErroEntrada(error){
     let primeiroP = document.querySelector(".tela-entrada p");
     let segundoP = document.querySelector(".tela-entrada p:nth-child(3)")
     
+    let telagif = document.querySelector(".gif");
+    let telaentrada = document.querySelector(".tela-entrada");
+
+    telagif.classList.add("escondido");
+    telaentrada.classList.remove("escondido");
+    
+    
     //erro de nome em branco  /  erro de nome repetido
     if(nomeUsuario.name == ""){
         
@@ -134,7 +141,7 @@ function imprimeMensagem(mensagem){
         espacoMensagens.innerHTML += `<div class="message status"><span class="horario">(${mensagem.time})</span><span class="from">${mensagem.from}</span>${mensagem.text}</div>`
     }else if(mensagem.type === "message"){
         espacoMensagens.innerHTML += `<div class="message"><span class="horario">(${mensagem.time})</span><span class="from">${mensagem.from}</span>para<span class="to">${mensagem.to}:</span><span class="text">${mensagem.text}</span></div>`
-    }else if(mensagem.type === "private_message"){
+    }else if(mensagem.type === "private_message" && ((mensagem.to === "Todos" || mensagem.to === nomeUsuario.name) || mensagem.from === nomeUsuario.name)){
         espacoMensagens.innerHTML += `<div class="message private_message"><span class="horario">(${mensagem.time})</span><span class="from">${mensagem.from}</span>reservadamente para<span class="to">${mensagem.to}:</span><span class="text">${mensagem.text}</span></div>`
     }
 }
